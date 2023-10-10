@@ -18,20 +18,24 @@
 //   }
 // }
 
-const response = await fetch("http://localhost:5001/books");
-const data = await response.json();
+// const response = await fetch("http://localhost:5001/books");
+// const data = await response.json();
 
-setAuthor(data.title);
-setGenre(data.genre);
+// setAuthor(data.title);
+// setGenre(data.genre);
 
-const [author, setAutorh] = useState("");
+// const [author, setAutorh] = useState("");
 
-const response = await fetch("http://localhost:5001/books", {
-  method: "POST",
-  mode: "CORS",
-  body: {
-    title: title,
-    author: author,
-    genre: genre,
-  },
-});
+// const response = await fetch("http://localhost:5001/books", {
+//   method: "POST",
+//   mode: "CORS",
+//   body: {
+//     title: title,
+//     author: author,
+//     genre: genre,
+//   },
+// });
+
+// require("dotenv").config();
+
+// console.log(process.env.MY_NAME);
