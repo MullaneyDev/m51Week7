@@ -34,33 +34,34 @@ const bookSchema = new mongoose.Schema({
 
 const Book = mongoose.model("book", bookSchema);
 
-app.get("/books", (request, response) => {
-  console.log(request.originalUrl);
-  const book = {
-    title: "lord of the rings",
-    author: "tolkein",
-    genre: "fantasy",
-  };
+app.get("/books", async (request, response) => {
+  const getBooks = await Book.find();
 
   const successResponse = {
     message: "success",
-    book: book,
+    getBooks: getBooks,
   };
 
   response.send(successResponse);
 });
 
-app.post("/books", (request, response) => {
-  console.log(request.body.title);
-  const newBook = {
+app.get("/books/:title", async (request, response) => {
+  const getBook = await Book.find(request.params);
+
+  const successResponse = {
+    message: "success",
+    getBook: getBook,
+  };
+
+  response.send(successResponse);
+});
+
+app.post("/books", async (request, response) => {
+  const newBook = await Book.create({
     title: request.body.title,
     author: request.body.author,
     genre: request.body.genre,
-  };
-
-  // create a book on the db(
-  //  title: request.body.title,
-  // )
+  });
 
   const successResponse = {
     message: "success",
@@ -70,6 +71,56 @@ app.post("/books", (request, response) => {
   response.send(successResponse);
 });
 
+app.put("/books", async (request, response) => {
+  const updateBook = await Book.findOneAndUpdate(
+    { title: request.body.title },
+    { author: request.body.author }
+  );
+
+  const successResponse = {
+    message: "success",
+    updateBook: updateBook,
+  };
+
+  response.send(successResponse);
+});
+
+// app.delete("/books", async (request, response) => {
+//   const deleteBook = await Book.deleteOne({
+//     title: request.body.title,
+//   });
+
+//   const successResponse = {
+//     message: "success",
+//     deleteBook: deleteBook,
+//   };
+
+//   response.send(successResponse);
+// });
+
+app.delete("/books/:title", async (request, response) => {
+  const deleteBook = await Book.deleteOne(request.params);
+
+  const successResponse = {
+    message: "success",
+    deleteBook: deleteBook,
+  };
+
+  response.send(successResponse);
+});
+
+app.delete("/books", async (request, response) => {
+  const deleteBook = await Book.deleteMany();
+
+  const successResponse = {
+    message: "success",
+    deleteBook: deleteBook,
+  };
+
+  response.send(successResponse);
+});
+
+app.update;
 app.listen(5001, () => {
   console.log("Server is listening");
 });
