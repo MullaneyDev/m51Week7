@@ -1,92 +1,25 @@
 const { Router } = require("express");
 const bookRouter = Router();
 
-const Book = require("./model");
+const {
+  findAllBooks,
+  findBookByTitle,
+  addBook,
+  editAuthor,
+  deleteBookByTitle,
+  deleteAllBooks,
+} = require("./controllers");
 
-bookRouter.get("/books", async (request, response) => {
-  const getBooks = await Book.find();
+bookRouter.get("/books", findAllBooks);
 
-  const successResponse = {
-    message: "success",
-    getBooks: getBooks,
-  };
+bookRouter.get("/books/:title", findBookByTitle);
 
-  response.send(successResponse);
-});
+bookRouter.post("/books", addBook);
 
-bookRouter.get("/books/:title", async (request, response) => {
-  const getBook = await Book.find(request.params);
+bookRouter.put("/books", editAuthor);
 
-  const successResponse = {
-    message: "success",
-    getBook: getBook,
-  };
+bookRouter.delete("/books/:title", deleteBookByTitle);
 
-  response.send(successResponse);
-});
-
-bookRouter.post("/books", async (request, response) => {
-  const newBook = await Book.create({
-    title: request.body.title,
-    author: request.body.author,
-    genre: request.body.genre,
-  });
-
-  const successResponse = {
-    message: "success",
-    newBook: newBook,
-  };
-
-  response.send(successResponse);
-});
-
-bookRouter.put("/books", async (request, response) => {
-  const updateBook = await Book.findOneAndUpdate(
-    { title: request.body.title },
-    { author: request.body.author }
-  );
-
-  const successResponse = {
-    message: "success",
-    updateBook: updateBook,
-  };
-
-  response.send(successResponse);
-});
-
-// app.delete("/books", async (request, response) => {
-//   const deleteBook = await Book.deleteOne({
-//     title: request.body.title,
-//   });
-
-//   const successResponse = {
-//     message: "success",
-//     deleteBook: deleteBook,
-//   };
-
-//   response.send(successResponse);
-// });
-
-bookRouter.delete("/books/:title", async (request, response) => {
-  const deleteBook = await Book.deleteOne(request.params);
-
-  const successResponse = {
-    message: "success",
-    deleteBook: deleteBook,
-  };
-
-  response.send(successResponse);
-});
-
-bookRouter.delete("/books", async (request, response) => {
-  const deleteBook = await Book.deleteMany();
-
-  const successResponse = {
-    message: "success",
-    deleteBook: deleteBook,
-  };
-
-  response.send(successResponse);
-});
+bookRouter.delete("/books", deleteAllBooks);
 
 module.exports = bookRouter;
