@@ -52,7 +52,7 @@ const editAuthor = async (request, response) => {
 };
 
 const deleteBookByTitle = async (request, response) => {
-  const deleteBook = await Book.deleteOne(request.params);
+  const deleteBook = await Book.deleteOne(request.params.title);
 
   const successResponse = {
     message: "success",
@@ -73,6 +73,32 @@ const deleteAllBooks = async (request, response) => {
   response.send(successResponse);
 };
 
+const findByPrice = async (request, response) => {
+  const findBookByPrice = await Book.find({
+    price: { $gte: request.params.priceLow, $lte: request.params.priceHigh },
+  }).exec();
+
+  const successResponse = {
+    message: "success",
+    findBookByPrice: findBookByPrice,
+  };
+
+  response.send(successResponse);
+};
+
+const findByAuthor = async (request, response) => {
+  const findBookByAuthor = await Book.find({
+    author: request.params.author,
+  });
+
+  const successResponse = {
+    message: "success",
+    findBookByAuthor: findBookByAuthor,
+  };
+
+  response.send(successResponse);
+};
+
 module.exports = {
   findAllBooks: findAllBooks,
   findBookByTitle: findBookByTitle,
@@ -80,4 +106,6 @@ module.exports = {
   editAuthor: editAuthor,
   deleteBookByTitle: deleteBookByTitle,
   deleteAllBooks: deleteAllBooks,
+  findByPrice: findByPrice,
+  findByAuthor: findByAuthor,
 };

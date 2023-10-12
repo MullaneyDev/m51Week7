@@ -8,6 +8,8 @@ const {
   editAuthor,
   deleteBookByTitle,
   deleteAllBooks,
+  findByPrice,
+  findByAuthor,
 } = require("./controllers");
 
 bookRouter.get("/books", findAllBooks);
@@ -20,6 +22,10 @@ bookRouter.put("/books", editAuthor);
 
 bookRouter.delete("/books/:title", deleteBookByTitle);
 
-bookRouter.delete("/books", deleteAllBooks);
+bookRouter.delete("/books/deleteAll", deleteAllBooks);
+
+bookRouter.get("/books/author/:author", findByAuthor);
+
+bookRouter.get("/books/price/:priceLow/:priceHigh", findByPrice);
 
 module.exports = bookRouter;
