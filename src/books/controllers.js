@@ -1,4 +1,5 @@
 const Book = require("./model");
+const Author = require("../author/model");
 
 const findAllBooks = async (request, response) => {
   const getBooks = await Book.find();
@@ -87,12 +88,14 @@ const findByPrice = async (request, response) => {
 };
 
 const findByAuthor = async (request, response) => {
+  const author = await Author.find({ authorName: request.params.author });
   const findBookByAuthor = await Book.find({
     author: request.params.author,
   });
 
   const successResponse = {
     message: "success",
+    author: author,
     findBookByAuthor: findBookByAuthor,
   };
 
