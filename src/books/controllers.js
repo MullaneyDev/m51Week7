@@ -27,6 +27,7 @@ const addBook = async (request, response) => {
     title: request.body.title,
     author: request.body.author,
     genre: request.body.genre,
+    price: request.body.price,
   });
   const successResponse = {
     message: "success",
