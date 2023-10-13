@@ -53,7 +53,7 @@ const editAuthor = async (request, response) => {
 };
 
 const deleteBookByTitle = async (request, response) => {
-  const deleteBook = await Book.deleteOne(request.params.title);
+  const deleteBook = await Book.deleteOne(request.params);
 
   const successResponse = {
     message: "success",
